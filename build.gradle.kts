@@ -18,6 +18,8 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.15.0"
     // ktlint linter - read more: https://github.com/JLLeitschuh/ktlint-gradle
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+
+    id("antlr")
 }
 
 group = properties("pluginGroup")
@@ -29,7 +31,9 @@ repositories {
     jcenter()
 }
 dependencies {
+    antlr("org.antlr:antlr4:4.9.2")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
+    implementation("org.antlr:antlr4-intellij-adaptor:0.1")
 }
 
 // Configure gradle-intellij-plugin plugin.
@@ -118,5 +122,9 @@ tasks {
         // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first())
+    }
+
+    generateGrammarSource {
+        arguments.addAll(setOf("-package", "org.antlr.jetbrains.maikuro.parser", "-Xexact-output-dir"))
     }
 }

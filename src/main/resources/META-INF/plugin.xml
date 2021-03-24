@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.github.aurimasniekis.maikuroideaplugin</id>
-    <name>maikuro-idea-plugin</name>
+    <name>Maikuro</name>
     <vendor>aurimasniekis</vendor>
 
     <!-- Product and plugin compatibility requirements -->
@@ -8,12 +8,13 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.aurimasniekis.maikuroideaplugin.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.aurimasniekis.maikuroideaplugin.services.MyProjectService"/>
+        <fileType name="Maikuro" implementationClass="org.maikuro.lang.MaikuroFileType"
+                  fieldName="INSTANCE" language="Maikuro" extensions="mi"/>
+
+        <lang.parserDefinition language="Maikuro" implementationClass="org.maikuro.lang.MaikuroParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Maikuro" implementationClass="org.maikuro.lang.MaikuroSyntaxHighlighterFactory"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.aurimasniekis.maikuroideaplugin.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
 </idea-plugin>
